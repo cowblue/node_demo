@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>主页</title>
+    <style>
+        .logout {
+            border: 0 none;
+            border-radius: 3px;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 8px;
+            color: #fff;
+            background-color: #f33;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>没错这就是主页</h1>
+    <button class="logout" id="logout">退出</button>
+</body>
+<script type="text/javascript" src="/public/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/public/static/h-ui/js/H-ui.js"></script>
+<script type="text/javascript" src="/public/lib\layer\2.4\layer.js"></script>
+<script>
+    $('#logout').click(function() {
+        layer.confirm('确定退出登录当前账号？', {
+            btn: ['确定','取消'] //按钮
+            }, 
+            function(){
+                $.ajax({
+                    url:'/account/logout',
+                    type:'POST',
+                    dataType:'json',
+                    success:function(res) {
+                        layer.msg(res.msg)
+                        if(res.code === 0) {
+                            setTimeout(function() {
+                                location.href = '/account/login'
+                            },500)
+                        }
+                    }
+                })
+            }, 
+            function(){
+                layer.close();    
+            })
+        
+    })
+</script>
+</html>
